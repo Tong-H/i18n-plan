@@ -4,12 +4,12 @@
 
 i18n-plan is an easy-to-use internationalization plugin for Javascript, supports both nodejs and browser-based applications, and should work with any Javascript framework.
 
-**What we can do**
+**What i18n-plan can do**
 
-- **Automatically generate and update** your local language files
+- Use a sample commands provided to **generate and update your local language files**
 - Provide **export and import features** to enable efficient management of local language files. Your local language files can be export as `.xls` files , and can update by import `.xls` files. This feature allows for seamless collaboration on manage the local languages files.
 - Out-of-the-box **automatic translation feature powered by ChatGPT or YouDao** is currently integrated. Additionally, We provide a custom option that allows you to integrate any other translator of your choice into our procedures.
-- **retrieve the translation value** using its corresponding key.
+- **retrieve the text content** using its corresponding key.
 - Use **template strings** to inject dynamic data into translations.
 
 # Getting started
@@ -30,8 +30,8 @@ npm -i npx i18n-plan
 - The following content is a simple case. [Here is an example configuration with detailed explanation for each setting item](/I18NPLAN.config.js)
 
 ```js
-// The file should be export by `export default`
-export default {
+// The file should be export by `module.exports`
+module.exports = {
 	lans: ["en-US", "es-MX"],
 	refer: "en-US",
 	output: "build/locales"
@@ -66,7 +66,7 @@ export default {
 // page1.lan.json
 {
     "name": "hello, I'm the page one",
-    "templateString": "Today is ${date}"
+    "templateString": "what's the time? It's ${date}"
 }
 // page2.lan.json
 {
@@ -76,13 +76,13 @@ export default {
 
 - Now you can execute `npx i18n-plan` command in the terminal to generate locale files. [See details about  import / export / translation](#commands)
 - During the collection process, the process will search for all files that match the `.lan.json` format, starting from the root directory. With the configuration specified above, two files will be generated in the `build/locales` directory: `en-US.json` and `es-MX.json`.
-- The name of `lan.json` will takes as the key for it's collection. if two or more `.lan.json` file with the same name, they will be merged.
+- The name of `lan.json` will takes as the `key` for it's collection. if two or more `.lan.json` file with the same name, they will be merged.
 
 ``` json
 {
 	"page1": {
 		"name": "hello, I'm the page one",
-		"templateString": "Today is ${date}"
+		"templateString": "what's the time? It's ${date}"
 	},
 	"page2": {
 		"name": "while I'm the page two",
@@ -112,7 +112,7 @@ export default {
 ### ChatGPT
 
 - [Api key](https://platform.openai.com/account/api-keys) and [Organization key](https://platform.openai.com/account/org-settings) are required.
-- If you are in a country where you need to use a VPN to access ChatGBT, then `proxy` setting is required.
+- If you are in a district where you need to use a VPN to access ChatGBT, then `proxy` setting is required.
 
 ``` js
 interface TranslationResolveChatgbt {
@@ -139,7 +139,7 @@ resolve: {
 },
 ```
 
-### YouDao
+### YouDao translation
 
 - [key and appkey](https://ai.youdao.com/console/#/service-singleton/text-translation) are required.
 
@@ -164,9 +164,9 @@ resolve: {
 },
 ```
 
-### Custom
+### Custom translator integration
 
-- You can integrate your preferred translation service.
+- You can integrate your preferred translation service, like DeepL or Google
 
 ``` js
 type Translator= (props: { config: Config; from: string; to: string; content:  I18NPLAN.TranslationContent[] }) => Promise<I18NPLAN.TranslationContent[] | TranslationError>
@@ -190,7 +190,7 @@ resolve: {
 
 #### setLan
 
-- This function saves language resources obtained through imports or Ajax requests. You can invoke this function multiple times to merge language resources.
+- This function saves language resources that can be obtained through imports or Ajax requests. You can invoke this function multiple times to merge language resources.
 - It has two parameters:
 
 | Parameter | Description                                                     |
@@ -244,8 +244,6 @@ console.log(setLan({}, true)) // {}
 
 # [Commands](#commands)
 
-The following listed commands is used to collect and translate items
-
 - Collect and Update Locale Language Files
 
 This command will search for the `.lan.json` files in the root directory, and merges all the items within the files to generate the reference language file. This file will serve as the basis for updating other languages.
@@ -254,14 +252,14 @@ This command will search for the `.lan.json` files in the root directory, and me
 npx i18n-plan
 ```
 
-- To translate the giving keys
+- To translate the corresponding content of the giving keys
 
 ``` js
 //  If you want to translate the keys for the `name` of `page1` and `page2`
 {
 	"page1": {
 		"name": "hello, I'm the page one",
-		"templateString": "Today is ${date}"
+		"templateString": "now is ${date}"
 	},
 	"page2": {
 		"name": "while I'm the page two",

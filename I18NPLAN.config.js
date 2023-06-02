@@ -3,21 +3,26 @@ module.exports = {
 	lans: ["en-US", "es-MX", "zh-CN"],
 	// It specifies the main language that will serve as the reference for generating other languages.
 	refer: "en-US",
-	// It specifies the output directory. The expected value should be relative to the current working directory.
+	// It specifies the output directory. The expected value should be relative to the root directory.
 	output: "locales",
-	keySeparator: ",",
 	generateConclusion: true,
 	// Translation config
 	translation: {
 		/* 
 			default: false
-			Whether automate the translation process after syncing language files.  The new items will automatically put in the translation queue if it set to true
+			Whether automate the translation processor after syncing language files.  The new items will automatically put in the translation queue if it set to true
 		*/
 		auto: true,
-		// Set the number of times the translation process should attempt to translate if any item failed to translate. default: 0
-		retryTime: 0,
-		// Set a specific time interval for requests. It is recommended to avoid sending requests too quickly. default: 1000
-		interval: 1000,
+		/*
+			default: 0
+			Set the number of times the translation processor should attempt to translate if any item failed to translate. 
+		*/
+		 retryTime: 0,
+		/*
+			default: 1000
+			Set a specific time interval for requests. It is recommended to avoid sending requests too quickly.
+		*/
+		 interval: 1000,
 		/*
 			default: false
 			Whether translating items one by one, or translating all the items for one language at once. It's specifically for ChatGBT and Custom Translator. 
@@ -54,7 +59,9 @@ module.exports = {
 				vocabId: "",
 			},
 		},
-		// This custom function allows you to integrate other translation services according to your preference
+		/*
+			This custom function allows you to integrate other translation services according to your preference
+		*/ 
 		resolve: {
 			/*
 				type Translator= (props: { config: Config; from: string; to: string; content:  I18NPLAN.TranslationContent[] }) => Promise<I18NPLAN.TranslationContent[] | TranslationError>
@@ -63,7 +70,6 @@ module.exports = {
 					errorCode: number
 					error: any
 				}
-
 			*/
 			custom: ({ config, from, to, content }) => {
 				console.log(from, to, content );
