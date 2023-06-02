@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@jest/globals"
 import { getLanRes, toFlat } from "../../source/cli"
-import  * as helper from "../../source/index"
+import * as helper from "../../source/index"
 import config from "../I18NPLAN.config"
 import * as path from "node:path"
 
@@ -37,15 +37,50 @@ describe("helper", () => {
 				if (params) {
 					const _string = helper.getLan(item[0], params)
 					console.log(`contain template literal:${_string}`)
-					if (_string === undefined)  {
+					if (_string === undefined) {
 						expect(_string === undefined).toBeFalsy()
 						return
 					}
-					Object.entries(params).map(par => {
+					Object.entries(params).map((par) => {
 						expect(new RegExp(par[1], "img").test(_string as string)).toBeTruthy()
 					})
 				}
 			})
+		})
+	})
+	test("merge", () => {
+		const res = helper.merge(
+			{
+				a: { b: 1, c: 2, d: 3 },
+				g: {
+					one: {
+						two: {
+							three: "three",
+						},
+					},
+				},
+			},
+			{
+				a: { f: 4, c: 8, d: { e: 3 } },
+				g: {
+					one: {
+						two: {
+							four: "four",
+						},
+					},
+				},
+			}
+		)
+		expect(res).toEqual({
+			a: { f: 4, b: 1, c: 2, d: 3 },
+			g: {
+				one: {
+					two: {
+						three: "three",
+						four: "four",
+					},
+				},
+			},
 		})
 	})
 })
