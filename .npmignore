@@ -2,6 +2,7 @@
 /test
 /source
 /tsconfig.json
+*.map
 /rollup.config.js
 /i18n.config.ts
 /jest.config.cjs
