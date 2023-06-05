@@ -25,14 +25,14 @@ module.exports = {
 		 interval: 1000,
 		/*
 			default: false
-			Whether translating items one by one, or translating all the items for one language at once. It's specifically for ChatGBT and Custom Translator. 
+			Whether translating items one by one, or translating all the items for one language at once. It's specifically for ChatGPT and Custom Translator. 
 		*/
 		inBatch: true,
 		/* 
 			Two integrated translators are out of box for automated translation: youdao and chatgpt. Additionally, a custom function is included that allows you to integrate other translation services, such as Google or DeepL, into our procedures.
 		*/
 		resolve: {
-			translator: "chatgbt",
+			translator: "chatgpt",
 			// It sets up an array of regular expressions that instruct ChatGPT to skip specific text that matches them. This is especially helpful in cases where you want to exclude certain words or formats from being translated by ChatGPT. For the following example, the regular expression used to matchs HTML elements to ensure that ChatGPT preserves the matched parts of text.
 			rules: ["(<[a-zA-Z /]+>)"],
 			options: {
@@ -41,7 +41,7 @@ module.exports = {
 				// your apiKey
 				apiKey: "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",
 			},
-			// It is necessary to use this proxy configuration if you need to use vpn to access ChatGBT.
+			// It is necessary to use this proxy configuration if you need to use vpn to access ChatGPT.
 			proxy: {
 				host: "127.0.0.1",
 				port: 10809,

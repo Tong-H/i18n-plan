@@ -112,11 +112,11 @@ module.exports = {
 ### ChatGPT
 
 - [Api key](https://platform.openai.com/account/api-keys) and [Organization key](https://platform.openai.com/account/org-settings) are required.
-- If you are in a district where you need to use a VPN to access ChatGBT, then `proxy` setting is required.
+- If you are in a district where you need to use a VPN to access ChatGPT, then `proxy` setting is required.
 
 ``` js
-interface TranslationResolveChatgbt {
-	translator: "chatgbt"
+interface TranslationResolveChatgpt {
+	translator: "chatgpt"
 	rules?: string[]
 	options: {
 		organization: string
@@ -126,7 +126,7 @@ interface TranslationResolveChatgbt {
 }
 
 resolve: {
-	translator: "chatgbt",
+	translator: "chatgpt",
 	rules: [],
 	options: {
 		organization: "",

@@ -16,13 +16,13 @@ let chalk = {
 
 export const log = console.log,
 	getCommands = () => {
-		const avaiable = ["export", "import", "tanslate"]
+		const available = ["export", "import", "translate"]
 		const commands = {
 			for: "",
 			path: "",
 		}
 		process.argv.forEach((item, index) => {
-			const _f = avaiable.some((_c) => _c === item)
+			const _f = available.some((_c) => _c === item)
 			if (_f && !commands.for) {
 				commands.for = item
 				return
@@ -60,7 +60,7 @@ export const log = console.log,
 			try {
 				return JSON.parse(_r)
 			} catch (error) {
-				console.error("faild in json parse: " + _p)
+				console.error("Failed in json parse: " + _p)
 				return
 			}
 		} else if (/.xls$/.test(_p)) {
@@ -70,7 +70,7 @@ export const log = console.log,
 				const workSheetsFromBuffer = xlsx.parse(_r)
 				return workSheetsFromBuffer[0].data
 			} catch (error) {
-				console.error("faild in xls transform: " + _p)
+				console.error("Failed in xls transform: " + _p)
 				return
 			}
 		}
@@ -109,15 +109,15 @@ export const log = console.log,
 	toFlat = (lan: I18NPLAN.Lan, map: I18NPLAN.LanMap = new Map(), mapKey: Record<string, string[]> = {}, parents: string[] = []): [typeof map, typeof mapKey] => {
 		Object.entries(lan)
 			.map((item) => {
-				const indexs = [...parents, item[0]]
-				const _i = indexs.join(",")
-				mapKey[_i] = indexs
+				const indexes = [...parents, item[0]]
+				const _i = indexes.join(",")
+				mapKey[_i] = indexes
 
 				if (typeof item[1] === "object" && item[1]) {
 					map.set(mapKey[_i], undefined)
-					toFlat(item[1], map, mapKey, indexs)
+					toFlat(item[1], map, mapKey, indexes)
 				} else {
-					mapKey[_i] = indexs
+					mapKey[_i] = indexes
 					map.set(mapKey[_i], item[1])
 				}
 			})
@@ -134,16 +134,16 @@ export const log = console.log,
 		const remainder = Object.fromEntries(
 			Object.entries(lan)
 				.map((item) => {
-					const indexs = [...parents, item[0]]
-					const _i = referResMapKey[indexs.join(",")]
+					const indexes = [...parents, item[0]]
+					const _i = referResMapKey[indexes.join(",")]
 					if (!_referResMap.has(_i)) {
-						removed.push({ key: indexs, value: JSON.stringify(item[1]) })
-						log(chalk.yellow(`removed: ${indexs}`))
+						removed.push({ key: indexes, value: JSON.stringify(item[1]) })
+						log(chalk.yellow(`removed: ${indexes}`))
 						return []
 					}
 
 					if (typeof item[1] === "object" && item[1]) {
-						const _children = toReduce(item[1], _referResMap, referResMapKey, indexs, removed)
+						const _children = toReduce(item[1], _referResMap, referResMapKey, indexes, removed)
 						return [item[0], _children.remainder]
 					}
 
@@ -211,7 +211,7 @@ export const log = console.log,
 			return
 		}
 		if (_resolve.translator === "youdao") return Translators.youdao
-		if (_resolve.translator === "chatgbt") return Translators.chatgpt
+		if (_resolve.translator === "chatgpt") return Translators.chatgpt
 	},
 	toTranslate = async (config: I18NPLAN.Config, lanResults: I18NPLAN.CollectedLans[]) => {
 		const translation = config.translation
@@ -502,7 +502,7 @@ async function entry(testConfig?: I18NPLAN.Config) {
 	const config = testConfig ? testConfig : await getConfig(rootPath)
 
 	if (!config) {
-		log(chalk.red(`Cann't find the config file in the root path`))
+		log(chalk.red(`Can't find the config file in the root path`))
 		return
 	}
 

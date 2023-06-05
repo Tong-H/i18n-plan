@@ -12,7 +12,7 @@ export namespace I18NPLAN {
 			retryTime?: number
 			interval?: number
 			inBatch?: boolean
-			resolve?: TranslationResolveYoudao | TranslationResolveChatgbt | TranslationResolveCustom
+			resolve?: TranslationResolveYoudao | TranslationResolveChatgpt | TranslationResolveCustom
 		}
 	}
 	type BasicLanValue = null | string | number | boolean
@@ -47,8 +47,8 @@ export namespace I18NPLAN {
 			vocabId?: string
 		}
 	}
-	interface TranslationResolveChatgbt {
-		translator: "chatgbt"
+	interface TranslationResolveChatgpt {
+		translator: "chatgpt"
 		rules?: string[]
 		options: {
 			organization: string

@@ -4,7 +4,7 @@ import { I18NPLAN } from "./type"
 import tunnel from "tunnel"
 
 const chatgpt: I18NPLAN.Translator = ({ config, from, to, content }) => {
-	const { options, rules, proxy } = config.translation?.resolve as I18NPLAN.TranslationResolveChatgbt
+	const { options, rules, proxy } = config.translation?.resolve as I18NPLAN.TranslationResolveChatgpt
 	return new Promise(async (resolve, reject) => {
 		const { Configuration, OpenAIApi } = await import("openai")
 		const configuration = new Configuration({
@@ -47,11 +47,10 @@ const chatgpt: I18NPLAN.Translator = ({ config, from, to, content }) => {
 			.then((res) => {
 				try {
 					if (!res.data.choices[0].message) {
-						return { errorCode: -2, error: { messgae: "empty translation" } }
+						return { errorCode: -2, error: { message: "empty translation" } }
 					}
 					const response = JSON.parse(
 						res.data.choices[0].message?.content.replace(/(?<=\}) \(.*$/, (r1) => {
-							console.log(r1, "sdsdsd")
 							return ""
 						})
 					)
@@ -71,7 +70,7 @@ const youdao: I18NPLAN.Translator = ({ config, from, to, content }) => {
 	const { options } = config.translation?.resolve as I18NPLAN.TranslationResolveYoudao
 	return new Promise((resolve, reject) => {
 		if (options === undefined) {
-			resolve({ errorCode: -2, error: "options are undefined" })
+			resolve({ errorCode: -2, error: "Options are undefined" })
 			return
 		}
 		function truncate(q: string) {
@@ -105,7 +104,7 @@ const youdao: I18NPLAN.Translator = ({ config, from, to, content }) => {
 			}
 			try {
 				const _res = JSON.parse(body)
-				_res.translation ? resolve([{ key: content[0].key, value: _res.translation[0] }]) : resolve({ errorCode: -2, error: { messgae: "empty translation" } })
+				_res.translation ? resolve([{ key: content[0].key, value: _res.translation[0] }]) : resolve({ errorCode: -2, error: { message: "empty translation" } })
 			} catch (error) {
 				resolve({ errorCode: -2, error: error })
 			}

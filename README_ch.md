@@ -112,11 +112,11 @@ module.exports = {
 ### ChatGPT
 
 - [Api key](https://platform.openai.com/account/api-keys) 和 [Organization key](https://platform.openai.com/account/org-settings) 是必需的
-- 如果你所在的地区需要通过 VPN 才能访问 ChatGBT, 那么 `proxy` 配置是必需的
+- 如果你所在的地区需要通过 VPN 才能访问 ChatGPT, 那么 `proxy` 配置是必需的
 
 ``` js
-interface TranslationResolveChatgbt {
-	translator: "chatgbt"
+interface TranslationResolveChatgpt {
+	translator: "chatgpt"
 	rules?: string[]
 	options: {
 		organization: string
@@ -126,7 +126,7 @@ interface TranslationResolveChatgbt {
 }
 
 resolve: {
-	translator: "chatgbt",
+	translator: "chatgpt",
 	rules: [],
 	options: {
 		organization: "",
@@ -310,14 +310,14 @@ module.exports = {
 		 interval: 1000,
 		/*
 			默认: false
-			是逐个翻译项目，还是一次性翻译某种语言的所有项目。只适用于 ChatGBT 和自定义翻译
+			是逐个翻译项目，还是一次性翻译某种语言的所有项目。只适用于 ChatGPT 和自定义翻译
 		*/
 		inBatch: true,
 		/* 
 			两个翻译服务开箱即用：有道和ChatGPT，此外，还提供了一个自定义函数，可以将其他翻译服务（如谷歌或DeepL）集成到我们的流程中。
 		*/
 		resolve: {
-			translator: "chatgbt",
+			translator: "chatgpt",
 			// 设置一个正则表达式数组，指导 ChatGPT 跳过与其匹配的特定文本，可以让 ChatGPT 排除某些单词或格式保留其原始文本。
 			rules: ["(<[a-zA-Z /]+>)"],
 			options: {
@@ -326,7 +326,7 @@ module.exports = {
 				// apiKey
 				apiKey: "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",
 			},
-			// 如果你所在的地区需要通过 VPN 才能访问 ChatGBT, 那么 `proxy` 配置是必需的
+			// 如果你所在的地区需要通过 VPN 才能访问 ChatGPT, 那么 `proxy` 配置是必需的
 			proxy: {
 				host: "127.0.0.1",
 				port: 10809,
