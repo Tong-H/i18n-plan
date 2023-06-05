@@ -376,10 +376,7 @@ const toSync = async (config: I18NPLAN.Config, destination: string, rootPath: st
 						: a
 				const [_name, _val] = c
 
-				_a[_name] = {
-					...(_name in _a ? _a[_name] : {}),
-					..._val,
-				}
+				_a[_name] = _name in _a ? helper.merge(_a[_name], _val) : _val
 				return _a
 			}, {})
 	})()

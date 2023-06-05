@@ -1,13 +1,14 @@
 import { I18NPLAN } from "./type"
 
-const lanResource: I18NPLAN.Lan = {}
+let lanResource: I18NPLAN.Lan = {}
 export const getKey = (string: string) => /\$\{(?<key>[a-zA-Z0-9]+)\}/.exec(string)
 
 export function setLan(...[lanRes, isRestore]: Parameters<I18NPLAN.setLan>): ReturnType<I18NPLAN.setLan> {
 	if (isRestore) {
-		Object.entries(lanResource).map((item) => delete lanResource[item[0]])
+		lanResource = {}
 	}
-	Object.entries(lanRes || {}).map((item) => (lanResource[item[0]] = item[1]))
+	if (!(lanRes && typeof lanRes === "object")) return lanResource
+	lanResource = merge(lanResource, lanRes)
 	return lanResource
 }
 export const merge = (first: I18NPLAN.LanValue, second: I18NPLAN.LanValue): I18NPLAN.LanValue => {
