@@ -26,7 +26,7 @@ npm -i npx i18n-plan
 
 ### 创建配置文件
 
-- `I18NPLAN.config.js` 应该放置在项目根目录中，i18n-plan 会由此路径查找 `.lan.json` 文件
+- `I18NPLAN.config.cjs` 应该放置在项目根目录中，i18n-plan 会由此路径查找 `.lan.json` 文件
 - 下面是个简单的用例. [查看示例配置文件，包含每个配置项的详细解释](#configuration)
 
 ```js

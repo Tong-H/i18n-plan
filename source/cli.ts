@@ -189,15 +189,15 @@ export const log = console.log,
 		})()
 		if (js) return js.default
 
-		const ts = await (async () => {
+		const cjs = await (async () => {
 			try {
-				return await import(href + ".ts")
+				return await import(href + ".cjs")
 			} catch (error) {
 				log(chalk.red(error))
 				return
 			}
 		})()
-		if (ts) return ts.default
+		if (cjs) return cjs.default
 
 		return
 	},

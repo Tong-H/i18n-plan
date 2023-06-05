@@ -26,8 +26,8 @@ npm -i npx i18n-plan
 
 ### Create a Configuration file
 
-- The presence of a `I18NPLAN.config.js` file in a directory indicates that the directory is a project's root. i18n-plan will then search for `.lan.json` files within this root directory.
-- The following content is a simple case. [Here is an example configuration with detailed explanation for each setting item](/I18NPLAN.config.js)
+- The presence of a `I18NPLAN.config.cjs` file in a directory indicates that the directory is a project's root. i18n-plan will then search for `.lan.json` files within this root directory.
+- The following content is a simple case. [Here is an example configuration with detailed explanation for each setting item](/I18NPLAN.config.cjs)
 
 ```js
 // The file should be export by `module.exports`
@@ -93,7 +93,7 @@ module.exports = {
 ### translation
 
 - Set `auto` to true to enable translation feature
-- [Here is the detailed explanation for each setting item](/I18NPLAN.config.js)
+- [Here is the detailed explanation for each setting item](/I18NPLAN.config.cjs)
 
 ```js
 {
