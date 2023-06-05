@@ -10,7 +10,7 @@ const config: I18NPLAN.Config = {
 		retryTime: 3,
 		// custom: (config, detail) => {
 		// 	return new Promise<string>((resolve, reject) => {
-		// 		resolve("my translator")
+		// 		resolve("my translation")
 		// 	})
 		// },
 		resolve: {

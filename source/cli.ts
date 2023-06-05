@@ -183,7 +183,6 @@ export const log = console.log,
 			try {
 				return await import(href + ".js")
 			} catch (error) {
-				log(chalk.red(error))
 				return
 			}
 		})()
@@ -193,7 +192,6 @@ export const log = console.log,
 			try {
 				return await import(href + ".cjs")
 			} catch (error) {
-				log(chalk.red(error))
 				return
 			}
 		})()
@@ -280,7 +278,7 @@ export const log = console.log,
 					if (typeof item.value !== "string") {
 						return item
 					}
-					const translatorProps = { config, from: config.refer, to: item.lanName, content: [{ key: item.key, value: item.value }] }
+					const translatorProps = { config, from: config.refer, to: item.lanName, content: [{ key: item.key, value: item.value, lanName: item.lanName }] }
 					const response = await translating(translatorProps, index * timeInterval, translator)
 					if (!response || !(response instanceof Array) || !response[0]) {
 						error.push(item)
@@ -292,7 +290,6 @@ export const log = console.log,
 				})
 			)
 
-			log(result)
 			currentResult = toUpdate(result, currentResult)
 			remains = error
 			current++
@@ -516,7 +513,7 @@ async function entry(testConfig?: I18NPLAN.Config) {
 	const config = testConfig ? testConfig : await getConfig(rootPath)
 
 	if (!config) {
-		log(chalk.red(`Can't find the config file in the root path`))
+		log(chalk.red(`The configuration file "I18NPLAN.config.cjs" or "I18NPLAN.config.js" was not found in the ${rootPath}`))
 		return
 	}
 

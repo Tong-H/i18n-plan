@@ -2,13 +2,13 @@
 
 [中文](/README_ch.md)/[English](/README.md)
 
-i18n-plan 是一个简单的 i18n Javascript 插件，支持基于 Node.js 和浏览器的 App，并且应该兼容所有 Javascript 框架。
+i18n-plan 是一个简单的 i18n Javascript 插件，支持基于 Node.js 和浏览器的 App，并且应该适用于所有 Javascript 框架。
 
 **i18n-plan 能做什么**
 
-- **生成和更新本地化语言文件**，只需执行一个命令即可
-- 提供**导出和导入功能**以便高效地管理本地语言文件。可以将本地语言文件导出为 `.xls` 文件，也可以通过导入 `.xls` 文件对本地语言文件进行更新。此功能可以让团队协作管理本地语言文件
-- 目前已集成 **ChatGPT 和 YouDao，自动翻译功能开箱即用**。此外还提供自定义选项可以将其他翻译器集成到我们的流程中
+- **生成和更新本地语言包**，只需执行一个命令即可
+- 提供**导出和导入功能**以便高效地管理本地语言包。可以将本地语言包导出为 `.xls` 文件，也可以通过导入 `.xls` 文件对本地语言包进行更新。此功能可以让团队协作管理本地语言包
+- 目前已集成 **ChatGPT 和 YouDao，自动翻译功能开箱即用**。此外还提供自定义选项可以将其他翻译器集成到 `i18n-plan` 的流程中
 - 通过**相应的键获取文本内容**
 - 使用**模板字符串**，在翻译中注入动态数据
 
@@ -17,17 +17,17 @@ i18n-plan 是一个简单的 i18n Javascript 插件，支持基于 Node.js 和�
 ## 安装
 
 ``` shell
-yarn add npx i18n-plan
+yarn add i18n-plan
 或
-npm -i npx i18n-plan
+npm -i i18n-plan
 ```
 
 ## 用法
 
 ### 创建配置文件
 
-- `I18NPLAN.config.cjs` 应该放置在项目根目录中，i18n-plan 会由此路径查找 `.lan.json` 文件
-- 下面是个简单的用例. [查看示例配置文件，包含每个配置项的详细解释](#configuration)
+- `I18NPLAN.config.cjs` 在的地方表示项目根目录
+- 下面是个简单的用例 [查看示例配置文件，包含每个配置项的详细解释](#configuration)
 
 ```js
 // 配置文件应该由 `module.exports` 导出
@@ -38,10 +38,10 @@ module.exports = {
 }
 ```
 
-### 管理本地语言文件
+### 管理本地语言包
 
 - 在项目根目录创建配置文件后，就可以开始使用了
-- 你可以继续在项目中添加一些 `.lan.json` 文件
+- 你可以继续在项目中添加一些 `.lan.json` 文件。 `.lan.json` 是 `i18n-plan` 的命名约定，表示该 `json` 文件是语言包的一部分
 
 ``` text
 |-- project
@@ -70,12 +70,12 @@ module.exports = {
 }
 // page2.lan.json
 {
-    "name": "while I'm the page two",
+    "name": "while I'm the page two"
 }
 ```
 
-- 现在可以在终端中执行 `npx i18n-plan` 命令来生成本地文件。 [查看有关 import / export / translation 命令详情](#commands)
-- 在搜集过程中, 程序会从根目录开始搜寻所有 `.lan.json` 后缀的文件。根据上面的配置文件, 在 `build/locales` 目录中，会生成两个文件: `en-US.json` and `es-MX.json`.
+- 现在可以在终端中执行 `npx i18n-plan` 命令来生成语言包。 [查看有关 import / export / translation 命令详情](#commands)
+- 在搜集过程中, 程序会从根目录开始搜寻所有以 `.lan.json` 为后缀的文件。根据上面的配置文件, 在 `build/locales` 目录中，会生成两个文件: `en-US.json` and `es-MX.json`.
 - `lan.json` 文件的名称会作为它的集合的 `key`。如果两个及以上的 `.lan.json` 文件有着相同的名称，那么这些文件的内容会被合并。
 
 ``` json
@@ -85,7 +85,7 @@ module.exports = {
 		"templateString": "now is ${date}"
 	},
 	"page2": {
-		"name": "while I'm the page two",
+		"name": "while I'm the page two"
 	}
 }
 ```
@@ -109,7 +109,7 @@ module.exports = {
 
 - 现在你可以在 `resolve` 配置翻译相关的设置
   
-### ChatGPT
+#### ChatGPT
 
 - [Api key](https://platform.openai.com/account/api-keys) 和 [Organization key](https://platform.openai.com/account/org-settings) 是必需的
 - 如果你所在的地区需要通过 VPN 才能访问 ChatGPT, 那么 `proxy` 配置是必需的
@@ -139,7 +139,7 @@ resolve: {
 },
 ```
 
-### 有道翻译
+#### 有道翻译
 
 - [ID 和 应用 ID](https://ai.youdao.com/console/#/service-singleton/text-translation) 是必需的
 
@@ -164,23 +164,21 @@ resolve: {
 },
 ```
 
-### 自定义继承
+#### 自定义集成
 
--你可以集成你需要的翻译服务，比如谷歌翻译或者 DeepL
+-你可以集成你需要的翻译服务到 `i18n-plan` 流程中，比如谷歌翻译或者 DeepL
 
 ``` js
 type Translator= (props: { config: Config; from: string; to: string; content:  I18NPLAN.TranslationContent[] }) => Promise<I18NPLAN.TranslationContent[] | TranslationError>
-type TranslationContent = { key: string[]; value: string }
+type TranslationContent = { key: string[]; value: string; lanName: string }
 type TranslationError = {
 	errorCode: number
 	error: any
 }
-
 resolve: {
 	custom: ({ config, from, to, content }) => {
-		console.log(from, to, content );
 		return new Promise((resolve, reject) => {
-			resolve("my translator")
+			resolve(content.map(item => ({...item, value: "from the custom translation"})))
 		})
 	},
 }
@@ -190,12 +188,12 @@ resolve: {
 
 #### setLan
 
-- 该函数用于保存语言资源，你可以通过 import 来导入或者 Ajax 请求来获取。可以被调用多次来合并语言资源
+- 该函数用于保存语言包，你可以通过 import 来导入或者 Ajax 请求来获取。可以被调用多次来合并语言包
 - 包含两个参数:
 
 | 参数 | 描述                                                     |
 | :-------- | :-------------------------------------------------------------- |
-| lanRes    | Json 格式的语言资源                    |
+| lanRes    | Json 格式的语言包                    |
 | isReset   | 是否重置已有资源，反正合并。默认: `false` |
 
 ``` js
@@ -242,8 +240,8 @@ console.log(setLan({}, true)) // {}
 
 # [Commands](#commands)
 
-- 收集和更新本地语言文件
-- 该命令将在根目录中查找 '.lan.json' 文件，并将文件中的所有条目合并以生成参考语言文件。该文件将作为更新其他语言的基础。
+- 收集和更新本地语言包
+- 该命令将在根目录中查找 '.lan.json' 文件，并将文件中的所有条目合并以生成参考语言包。该文件将作为更新其他语言的基础。
 
 ``` shell
 npx i18n-plan
@@ -284,11 +282,14 @@ npx i18n-plan import path=<指向 .xls 文件的绝对路径>
 
 ``` js
 module.exports = {
-	// 定义翻译的目标语言。此设置中列出的每一项都是输出文件的名称。当与翻译功能一起使用时，每个项目将作为翻译的目标语言发送给翻译器。
+	/*
+		定义翻译的目标语言。此设置中列出的每一项都是输出文件的名称。
+		当与翻译功能一起使用时，每一项都将作为翻译的目标语言发送给翻译服务，所以该值必须与翻译器要求的语言代码一致
+	*/
 	lans: ["en-US", "es-MX", "zh-CN"],
 	// 指定将用作生成其他语言参考的主要语言
 	refer: "en-US",
-	// 指定输出目录，相对于根目录的路径。
+	// 指定输出目录，相对于根目录的路径
 	output: "locales",
 	// 是否缓存历史增删项. 如果设为 true，你可以在 `_cache.json` 文件中找到增删项的 key
 	generateCache: true,
@@ -296,7 +297,7 @@ module.exports = {
 	translation: {
 		/* 
 			默认: false
-			是否在同步语言文件后自动化翻译。如果设置为 true，则新增加项将自动放入翻译队列中。
+			是否在同步语言包后自动化翻译。如果设置为 true，则新增加项将自动放入翻译队列中
 		*/
 		auto: true,
 		/*
@@ -306,7 +307,7 @@ module.exports = {
 		 retryTime: 0,
 		/*
 			默认: 1000
-			设置请求的时间间隔。建议避免发送过于频繁的请求。
+			设置请求的时间间隔。建议避免发送过于频繁的请求
 		*/
 		 interval: 1000,
 		/*
@@ -315,17 +316,17 @@ module.exports = {
 		*/
 		inBatch: true,
 		/* 
-			两个翻译服务开箱即用：有道和ChatGPT，此外，还提供了一个自定义函数，可以将其他翻译服务（如谷歌或DeepL）集成到我们的流程中。
+			两个翻译服务开箱即用：有道和ChatGPT，此外，还提供了一个自定义函数，可以将其他翻译服务（如谷歌或DeepL）集成到我们的流程中
 		*/
 		resolve: {
 			translator: "chatgpt",
-			// 设置一个正则表达式数组，指导 ChatGPT 跳过与其匹配的特定文本，可以让 ChatGPT 排除某些单词或格式保留其原始文本。
+			// 设置一个正则表达式数组，指导 ChatGPT 跳过与其匹配的特定文本，可以让 ChatGPT 排除某些单词或格式保留其原始文本
 			rules: ["(<[a-zA-Z /]+>)"],
 			options: {
 				// organization key
-				organization: "org-EZVGmI8jOAEVHxQclHNiSPTc",
+				organization: "",
 				// apiKey
-				apiKey: "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",
+				apiKey: "",
 			},
 			// 如果你所在的地区需要通过 VPN 才能访问 ChatGPT, 那么 `proxy` 配置是必需的
 			proxy: {
@@ -338,10 +339,10 @@ module.exports = {
 			options: {
 				api: "https://openapi.youdao.com/api",
 				// key
-				key: "b9Mj06A22QVXtYksYWaNwlXuGThbxB2x",
+				key: "",
 				// appkey
-				appkey: "6deac4e33f0ad3a3",
-				// 有道翻译使用自己的词典来过滤特殊单词或格式。请查看官方文档以获取详细信息。
+				appkey: "",
+				// 有道翻译使用自己的词典来过滤特殊单词或格式。请查看官方文档以获取详细信息
 				vocabId: "",
 			},
 		},
@@ -351,16 +352,15 @@ module.exports = {
 		resolve: {
 			/*
 				type Translator= (props: { config: Config; from: string; to: string; content:  I18NPLAN.TranslationContent[] }) => Promise<I18NPLAN.TranslationContent[] | TranslationError>
-				type TranslationContent = { key: string[]; value: string }
+				type TranslationContent = { key: string[]; value: string; lanName: string }
 				type TranslationError = {
 					errorCode: number
 					error: any
 				}
 			*/
 			custom: ({ config, from, to, content }) => {
-				console.log(from, to, content );
 				return new Promise((resolve, reject) => {
-					resolve("my translator")
+					resolve(content.map(item => ({...item, value: "来自自定义翻译器"})))
 				})
 			},
 		}

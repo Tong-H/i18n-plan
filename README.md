@@ -8,7 +8,7 @@ i18n-plan is an easy-to-use internationalization plugin for Javascript, supports
 
 - Use a sample commands provided to **generate and update your local language files**
 - Provide **export and import features** to enable efficient management of local language files. Your local language files can be export as `.xls` files , and can update by import `.xls` files. This feature allows for seamless collaboration on manage the local languages files.
-- Out-of-the-box **automatic translation feature powered by ChatGPT or YouDao** is currently integrated. Additionally, We provide a custom option that allows you to integrate any other translator of your choice into our procedures.
+- Out-of-the-box **automatic translation feature powered by ChatGPT or YouDao** is currently integrated. Additionally, We provide a custom option that allows you to integrate any other translator of your choice into `i18n-plan` procedures.
 - **retrieve the text content** using its corresponding key.
 - Use **template strings** to inject dynamic data into translations.
 
@@ -17,16 +17,16 @@ i18n-plan is an easy-to-use internationalization plugin for Javascript, supports
 ## install
 
 ``` shell
-yarn add npx i18n-plan
+yarn add i18n-plan
 or
-npm -i npx i18n-plan
+npm -i i18n-plan
 ```
 
 ## Usage
 
 ### Create a Configuration file
 
-- The presence of a `I18NPLAN.config.cjs` file in a directory indicates that the directory is a project's root. i18n-plan will then search for `.lan.json` files within this root directory.
+- The presence of a `I18NPLAN.config.cjs` file in a directory indicates that the directory is a project's root.
 - The following content is a simple case. [Here is an example configuration with detailed explanation for each setting item](/I18NPLAN.config.cjs)
 
 ```js
@@ -41,7 +41,7 @@ module.exports = {
 ### Manage locale language files
 
 - After creating the Configuration file in your project's root directory, you are now able to use it.
-- you can proceed to create some `.lan.json` files within your project.
+- you can proceed to create `.lan.json` files within your project. The naming convention of `.lan.json` in `i18n-plan` is specifically used to identify files containing language translations.
 
 ``` text
 |-- project
@@ -70,7 +70,7 @@ module.exports = {
 }
 // page2.lan.json
 {
-    "name": "while I'm the page two",
+    "name": "while I'm the page two"
 }
 ```
 
@@ -85,7 +85,7 @@ module.exports = {
 		"templateString": "what's the time? It's ${date}"
 	},
 	"page2": {
-		"name": "while I'm the page two",
+		"name": "while I'm the page two"
 	}
 }
 ```
@@ -109,7 +109,7 @@ module.exports = {
 
 - You can now configure your translator settings in `resolve`.
   
-### ChatGPT
+#### ChatGPT
 
 - [Api key](https://platform.openai.com/account/api-keys) and [Organization key](https://platform.openai.com/account/org-settings) are required.
 - If you are in a district where you need to use a VPN to access ChatGPT, then `proxy` setting is required.
@@ -139,7 +139,7 @@ resolve: {
 },
 ```
 
-### YouDao translation
+#### YouDao translation
 
 - [key and appkey](https://ai.youdao.com/console/#/service-singleton/text-translation) are required.
 
@@ -164,13 +164,13 @@ resolve: {
 },
 ```
 
-### Custom translator integration
+#### Custom translator integration
 
-- You can integrate your preferred translation service, like DeepL or Google
+- You can integrate your preferred translation service into `i18n-plan` procedures, like DeepL or Google
 
 ``` js
 type Translator= (props: { config: Config; from: string; to: string; content:  I18NPLAN.TranslationContent[] }) => Promise<I18NPLAN.TranslationContent[] | TranslationError>
-type TranslationContent = { key: string[]; value: string }
+type TranslationContent = { key: string[]; value: string; lanName: string }
 type TranslationError = {
 	errorCode: number
 	error: any
@@ -180,7 +180,7 @@ resolve: {
 	custom: ({ config, from, to, content }) => {
 		console.log(from, to, content );
 		return new Promise((resolve, reject) => {
-			resolve("my translator")
+			resolve("my translation")
 		})
 	},
 }
@@ -206,8 +206,6 @@ function setLan(lanRes: I18NPLAN.Lan, isRestore?: boolean): I18NPLAN.Lan
 
 - This function returns the value by its path
 - It has two parameters:
-  - The first one expects a string which is a key's path
-  - The second is a boolean that determines if the language resources should be merged or reset."
 
 | Parameter | Description                                                        |
 | :-------- | :----------------------------------------------------------------- |

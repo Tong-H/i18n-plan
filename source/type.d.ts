@@ -60,7 +60,7 @@ export namespace I18NPLAN {
 		custom:  Translator
 	}
 	type Translator= (props: { config: Config; from: string; to: string; content:  I18NPLAN.TranslationContent[] }) => Promise<I18NPLAN.TranslationContent[] | TranslationError>
-	type TranslationContent = { key: string[]; value: string }
+	type TranslationContent = { key: string[]; value: string; lanName: string }
 	type TranslationError = {
 		errorCode: number
 		error: any

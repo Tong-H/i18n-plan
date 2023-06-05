@@ -38,9 +38,9 @@ module.exports = {
 			rules: ["(<[a-zA-Z /]+>)"],
 			options: {
 				// your organization key
-				organization: "org-EZVGmI8jOAEVHxQclHNiSPTc",
+				organization: "",
 				// your apiKey
-				apiKey: "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",
+				apiKey: "",
 			},
 			// It is necessary to use this proxy configuration if you need to use vpn to access ChatGPT.
 			proxy: {
@@ -53,9 +53,9 @@ module.exports = {
 			options: {
 				api: "https://openapi.youdao.com/api",
 				// Your key
-				key: "b9Mj06A22QVXtYksYWaNwlXuGThbxB2x",
+				key: "",
 				// Your appkey
-				appkey: "6deac4e33f0ad3a3",
+				appkey: "",
 				// Youdao uses its own set of vocabularies to filter out special words or formats. Check its official document for the detailed information.
 				vocabId: "",
 			},
@@ -66,16 +66,15 @@ module.exports = {
 		resolve: {
 			/*
 				type Translator= (props: { config: Config; from: string; to: string; content:  I18NPLAN.TranslationContent[] }) => Promise<I18NPLAN.TranslationContent[] | TranslationError>
-				type TranslationContent = { key: string[]; value: string }
+				type TranslationContent = { key: string[]; value: string; lanName: string }
 				type TranslationError = {
 					errorCode: number
 					error: any
 				}
 			*/
 			custom: ({ config, from, to, content }) => {
-				console.log(from, to, content );
 				return new Promise((resolve, reject) => {
-					resolve("my translator")
+					resolve(content.map(item => ({...item, value: "from the custom translation"})))
 				})
 			},
 		}
