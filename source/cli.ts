@@ -215,7 +215,7 @@ export const log = console.log,
 	},
 	toTranslate = async (config: I18NPLAN.Config, lanResults: I18NPLAN.CollectedLans[]) => {
 		const translation = config.translation
-		if (!translation) {
+		if (!translation || !translation.resolve) {
 			log("translation config is not set")
 			return
 		}
@@ -229,8 +229,9 @@ export const log = console.log,
 		const timeInterval = typeof translation.interval === "number" && translation.interval > -1 ? translation.interval : 1000
 		let current = 0,
 			currentResult = lanResults
-
-		if (translation.inBatch === true) {
+		const isBatch = translation.inBatch === true && ("translator" in translation.resolve ? translation.resolve?.translator !== "youdao" : true)
+		
+		if (isBatch) {
 			let remains = lanResults
 			while (current <= retryTime && remains.length > 0) {
 				const error: I18NPLAN.CollectedLans[] = []

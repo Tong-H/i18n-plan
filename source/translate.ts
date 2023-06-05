@@ -104,7 +104,7 @@ const youdao: I18NPLAN.Translator = ({ config, from, to, content }) => {
 			}
 			try {
 				const _res = JSON.parse(body)
-				_res.translation ? resolve([{ key: content[0].key, value: _res.translation[0] }]) : resolve({ errorCode: -2, error: { message: "empty translation" } })
+				_res.translation ? resolve([{ ... content[0], value: _res.translation[0] }]) : resolve({ errorCode: -2, error: { message: "empty translation" } })
 			} catch (error) {
 				resolve({ errorCode: -2, error: error })
 			}
