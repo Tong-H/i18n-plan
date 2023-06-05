@@ -290,7 +290,8 @@ module.exports = {
 	refer: "en-US",
 	// 指定输出目录，相对于根目录的路径。
 	output: "locales",
-	generateConclusion: true,
+	// 是否缓存历史增删项. 如果设为 true，你可以在 `_cache.json` 文件中找到增删项的 key
+	generateCache: true,
 	// 翻译配置
 	translation: {
 		/* 

@@ -4,7 +4,7 @@ const config: I18NPLAN.Config = {
 	lans: ["en", "zh-CHS", "es-MX"],
 	refer: "en",
 	output: "test/locals",
-	generateConclusion: true,
+	generateCache: true,
 	translation: {
 		auto: true,
 		retryTime: 3,

@@ -5,7 +5,8 @@ module.exports = {
 	refer: "en-US",
 	// It specifies the output directory. The expected value should be relative to the root directory.
 	output: "locales",
-	generateConclusion: true,
+	// Whether newly added and removed items should be recorded. If set to true, you will be able to find these items in the _cache.json file.
+	generateCache: true,
 	// Translation config
 	translation: {
 		/* 

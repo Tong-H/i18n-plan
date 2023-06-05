@@ -271,7 +271,7 @@ export const log = console.log,
 			.flat(1)
 
 		let remains = lanItems
-		
+
 		while (current <= retryTime && remains.length > 0) {
 			const error: I18NPLAN.TranslationItem[] = []
 			const result = await Promise.all(
@@ -423,12 +423,28 @@ const toSync = async (config: I18NPLAN.Config, destination: string, rootPath: st
 			}
 		)
 
-	if (config.generateConclusion === true) {
-		const added = lanResults.map((item) => [item.name, Object.fromEntries(item.added.map((el) => [el.key.join(","), el.value]))])
-		const removed = lanResults.map((item) => [item.name, Object.fromEntries(item.removed.map((el) => [el.key.join(","), el.value]))])
-		const logInfo = { added: Object.fromEntries(added), removed: Object.fromEntries(removed) }
-		set(path.resolve(destination, `_conclusion.json`), logInfo)
-	}
+	const _p = path.resolve(destination, `_cache.json`)
+	const cache = (await get(_p)) || {}
+	const newLog = Object.fromEntries(
+		lanResults
+			.map((item) => [
+				item.name,
+				Object.fromEntries(
+					Object.entries({
+						added: item.added.map((el) => el.key.join(",")),
+						removed: item.removed.map((el) => el.key.join(",")),
+					}).filter((item) => item[1].length > 0)
+				),
+			])
+			.filter((item) => Object.keys(item[1]).length > 0)
+	)
+	if (Object.keys(newLog).length > 0) {
+		set(_p, {
+			[new Date().toJSON()]: newLog,
+			...cache,
+		})
+		log(`Changes have listed in the ${_p}`)
+	} else log("No Changes have been made to the items ")
 	return lanResults
 }
 
@@ -526,7 +542,7 @@ async function entry(testConfig?: I18NPLAN.Config) {
 		case "import":
 			if (givenPath === null) return
 			return toImport(config, givenPath, _output)
-		case "tanslate":
+		case "translate":
 			if (givenPath === null) return
 			return translateOnly(config, givenPath, _output)
 	}

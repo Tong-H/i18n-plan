@@ -6,7 +6,7 @@ export namespace I18NPLAN {
 		lans: string[]
 		refer: string
 		output: string
-		generateConclusion?: boolean
+		generateCache?: boolean
 		translation?: {
 			auto?: boolean
 			retryTime?: number
