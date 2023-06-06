@@ -9,7 +9,7 @@ i18n-plan is an easy-to-use internationalization plugin for Javascript, supports
 - Use a sample commands provided to **generate and update your local language files**
 - Provide **export and import features** to enable efficient management of local language files. Your local language files can be export as `.xls` files , and can update by import `.xls` files. This feature allows for seamless collaboration on manage the local languages files.
 - Out-of-the-box **automatic translation feature powered by ChatGPT or YouDao** is currently integrated. Additionally, We provide a custom option that allows you to integrate any other translator of your choice into `i18n-plan` procedures.
-- **retrieve the text content** using its corresponding key.
+- **retrieve the text content** using its corresponding key in your business logical.
 - Use **template strings** to inject dynamic data into translations.
 
 # Getting started
@@ -22,9 +22,7 @@ or
 npm -i i18n-plan
 ```
 
-## Usage
-
-### Create a Configuration file
+## Create a Configuration file
 
 - The presence of a `I18NPLAN.config.cjs` file in a directory indicates that the directory is a project's root.
 - The following content is a simple case. [Here is an example configuration with detailed explanation for each setting item](/I18NPLAN.config.cjs)
@@ -38,7 +36,7 @@ module.exports = {
 }
 ```
 
-### Manage locale language files
+## Manage locale language files
 
 - After creating the Configuration file in your project's root directory, you are now able to use it.
 - you can proceed to create `.lan.json` files within your project. The naming convention of `.lan.json` in `i18n-plan` is specifically used to identify files containing language translations.
@@ -90,7 +88,7 @@ module.exports = {
 }
 ```
 
-### translation
+## translation
 
 - Set `auto` to true to enable translation feature
 - [Here is the detailed explanation for each setting item](/I18NPLAN.config.cjs)
@@ -109,7 +107,7 @@ module.exports = {
 
 - You can now configure your translator settings in `resolve`.
   
-#### ChatGPT
+### ChatGPT
 
 - [Api key](https://platform.openai.com/account/api-keys) and [Organization key](https://platform.openai.com/account/org-settings) are required.
 - If you are in a district where you need to use a VPN to access ChatGPT, then `proxy` setting is required.
@@ -139,7 +137,7 @@ resolve: {
 },
 ```
 
-#### YouDao translation
+### YouDao translation
 
 - [key and appkey](https://ai.youdao.com/console/#/service-singleton/text-translation) are required.
 
@@ -164,7 +162,7 @@ resolve: {
 },
 ```
 
-#### Custom translator integration
+### Custom translator integration
 
 - You can integrate your preferred translation service into `i18n-plan` procedures, like DeepL or Google
 
@@ -178,7 +176,6 @@ type TranslationError = {
 
 resolve: {
 	custom: ({ config, from, to, content }) => {
-		console.log(from, to, content );
 		return new Promise((resolve, reject) => {
 			resolve("my translation")
 		})
@@ -186,11 +183,14 @@ resolve: {
 }
 ```
 
-### Usage in your app
+## Usage in your app
 
-#### setLan
+- After generating our language resources as described above, we can now access and utilize them in our business logic.
 
-- This function saves language resources that can be obtained through imports or Ajax requests. You can invoke this function multiple times to merge language resources.
+### setLan
+
+- This function is used to save language resources which can be imported.  If package size is a concern, it is recommended to use `Ajax request` to dynamically fetch the language resources.
+- You can invoke this function multiple times to merge language resources.
 - It has two parameters:
 
 | Parameter | Description                                                     |
